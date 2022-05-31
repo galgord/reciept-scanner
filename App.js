@@ -1,13 +1,39 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import QrScannerScreen from './Screens/QrScannerScreen';
+import ItemsListScreen from './Screens/ItemsListScreen';
+import { AntDesign } from '@expo/vector-icons';
+import { Entypo } from '@expo/vector-icons';
+
+const Tab = createBottomTabNavigator();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Tab.Navigator screenOptions={({route}) => ({
+       tabBarIcon: () => {
+       if (route.name === 'QrScanner'){
+        return <AntDesign name="camera" size={24} color="black"/>
+        } else {
+          return <Entypo name="list" size={24} color="black" />
+        }
+          
+          }})}>
+        <Tab.Screen name="QrScanner" 
+        component={QrScannerScreen} 
+        options={{
+          headerShown: false
+        }}/>
+        <Tab.Screen 
+        name="Items list" 
+        component={ItemsListScreen}
+        options={{
+          headerShown: false
+        }} />
+      </Tab.Navigator>
+    </NavigationContainer>
   );
 }
 
